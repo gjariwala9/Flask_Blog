@@ -60,13 +60,16 @@
         </div>
         <div class="col-md-4">
           <div class="content-section">
-            <h3>Our Sidebar</h3>
-            <p class='text-muted'>You can put any information here you'd like.
+            <h3>Latest Posts</h3>
+            <p class='text-muted'>Top 5 latest posts.
               <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
+                {% for post in latest_posts %}
+                  <li class="list-group-item list-group-item-light">
+                    <a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a> - 
+                    <a class="text-muted" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a><br>
+                    <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                  </li>
+                {% endfor %}
               </ul>
             </p>
           </div>

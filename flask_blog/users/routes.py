@@ -8,6 +8,11 @@ from flask_blog.users.utils import save_picture, send_reset_email
 
 users = Blueprint('users', '__name__')
 
+@users.context_processor
+def inject_lastest_post_all_templates():
+    latest_posts = Post.query.order_by(Post.date_posted.desc()).limit(5).all()
+    return dict(latest_posts=latest_posts)
+
 @users.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:

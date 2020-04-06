@@ -7,6 +7,11 @@ from flask_blog.posts.forms import PostForm
 
 posts = Blueprint('posts', '__name__')
 
+@posts.context_processor
+def inject_lastest_post_all_templates():
+    latest_posts = Post.query.order_by(Post.date_posted.desc()).limit(5).all()
+    return dict(latest_posts=latest_posts)
+
 @posts.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post():
